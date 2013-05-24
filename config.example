@@ -1,0 +1,10 @@
+
+# copy the contents of this file to a file named "config" in the same directory
+# then replace with your own settings
+
+[email] 
+to=example@example.com
+login=example@example.com
+password=MYPASSWORD
+smtp_server=smtp.gmail.com
+smtp_port=587
