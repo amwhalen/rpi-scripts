@@ -1,0 +1,8 @@
+# rpi-timelapse configuration
+
+# directory to save the pictures to, will be recursively created if it doesn't exist
+# don't include a trailing slash
+#SAVEDIR=/home/pi/rpi-timelapse
+
+# delay between photos in seconds (don't set less than 10 seconds)
+#DELAY=60
