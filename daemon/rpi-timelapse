@@ -12,6 +12,9 @@ if [[ -z "$DELAY" ]]; then
     DELAY=60
 fi
 
+logger "rpi-timelapse save directory: ${SAVEDIR}"
+logger "rpi-timelapse delay: ${DELAY}"
+
 # loop and take photos
 while [ true ]; do
 
@@ -33,7 +36,7 @@ while [ true ]; do
         filename=$(date +"%Y-%m-%d_%H-%M-%S").jpg
 
         /usr/bin/env raspistill -o $directory/$filename
-        
+
         if [ $? -ne 0 ]; then
             logger "Unable to use raspistill to take a photo. Error codefrom raspistill: $?"
             exit 1
