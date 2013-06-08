@@ -60,3 +60,5 @@ msg['From'] = email_user
 msg['To'] = to
 smtpserver.sendmail(email_user, [to], msg.as_string())
 smtpserver.quit()
+
+syslog.syslog('Email with IP address sent to ' + to)
