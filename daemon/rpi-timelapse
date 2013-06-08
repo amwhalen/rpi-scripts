@@ -20,7 +20,7 @@ while [ true ]; do
 
     hour=$(date +"%H")
 
-    if [ $hour -ge 5 ] && [ $hour -le 20 ]; then
+    #if [ $hour -ge 5 ] && [ $hour -le 20 ]; then
 
         directory=$SAVEDIR/$(date +"%Y-%m-%d")
 
@@ -44,9 +44,9 @@ while [ true ]; do
             logger "Photo saved to: ${filename}"
         fi
 
-    else
-        logger "Not time for a photo."
-    fi
+    #else
+        #logger "Not time for a photo."
+    #fi
 
     sleep $DELAY;
 
