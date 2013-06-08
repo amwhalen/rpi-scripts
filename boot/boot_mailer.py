@@ -37,6 +37,8 @@ except Exception as e:
 	syslog.syslog("Config File Error: " + e.strerror)
 	exit(1)
 
+syslog.syslog('Attempting to email ' + to)
+
 # smtp login
 smtpserver = smtplib.SMTP(smtp_server, smtp_port)
 smtpserver.ehlo()
@@ -61,4 +63,4 @@ msg['To'] = to
 smtpserver.sendmail(email_user, [to], msg.as_string())
 smtpserver.quit()
 
-syslog.syslog('Email with IP address sent to ' + to)
+syslog.syslog('Email sent to ' + to)
