@@ -11,12 +11,14 @@ from email.mime.text import MIMEText
 import datetime
 import ConfigParser
 import sys
+import syslog
 
 # grab the config file from command line arguments
 if len(sys.argv) > 1:
 	config_file = sys.argv[1]
 else:
-	print "Please supply the location of the config file."
+	sys.stderr.write("Please supply the location of the config file.")
+	syslog.syslog('No configuration file supplied.')
 	exit(1)
 
 # parse config file
@@ -31,7 +33,8 @@ try:
 	smtp_server    = config.get('email', 'smtp_server')
 	smtp_port      = config.getint('email', 'smtp_port')
 except Exception as e:
-	print "Config File Error: " + e.strerror
+	sys.stderr.write("Config File Error: " + e.strerror)
+	syslog.syslog("Config File Error: " + e.strerror)
 	exit(1)
 
 # smtp login
