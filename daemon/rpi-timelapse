@@ -50,11 +50,11 @@ while [ true ]; do
         fi
 
         # check if image is "dark"
-        darknessValue=`convert ${filename} -format "%[mean]" info:`
+        darknessValue=`convert ${directory}/${filename} -format "%[mean]" info:`
         # convert to an int
         darknessValue=$( printf "%.0f" $darknessValue )
         if [ "$darknessValue" -lt "$DARKNESS_THRESHOLD" ]; then
-            rm "${filename}"
+            rm "${directory}/${filename}"
             logger "Photo ${filename} was too dark (darkness value: ${darknessValue}). It has been deleted."
         fi
 
