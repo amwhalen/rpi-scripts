@@ -22,8 +22,10 @@ function logit {
     logger -t "rpi-timelapse" "$1"
 }
 
-logit "rpi-timelapse save directory: ${SAVEDIR}"
-logit "rpi-timelapse delay: ${DELAY}"
+logit "starting..."
+logit "save directory: ${SAVEDIR}"
+logit "delay: ${DELAY}"
+logit "darkness threshold: ${DARKNESS_THRESHOLD}"
 
 # loop and take photos
 while [ true ]; do
