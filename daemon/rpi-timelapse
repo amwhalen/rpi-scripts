@@ -45,8 +45,6 @@ while [ true ]; do
         if [ $? -ne 0 ]; then
             logger "Unable to use raspistill to take a photo. Error codefrom raspistill: $?"
             exit 1
-        else
-            logger "Photo saved to: ${filename}"
         fi
 
         # check if image is "dark"
@@ -57,7 +55,7 @@ while [ true ]; do
             rm "${directory}/${filename}"
             logger "Photo ${filename} was too dark (darkness value: ${darknessValue}). It has been deleted."
         else
-            logger "Photo ${filename} is OK. Darkness value: ${darknessValue}"
+            logger "Photo saved to ${filename}. Darkness value: ${darknessValue}"
         fi
 
     #else
