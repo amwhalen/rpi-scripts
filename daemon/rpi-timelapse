@@ -12,6 +12,11 @@ if [[ -z "$DELAY" ]]; then
     DELAY=60
 fi
 
+# threshold check
+if [[ -z "$DARKNESS_THRESHOLD" ]]; then
+    DARKNESS_THRESHOLD=1500
+fi
+
 logger "rpi-timelapse save directory: ${SAVEDIR}"
 logger "rpi-timelapse delay: ${DELAY}"
 
@@ -42,6 +47,15 @@ while [ true ]; do
             exit 1
         else
             logger "Photo saved to: ${filename}"
+        fi
+
+        # check if image is "dark"
+        darknessValue=`convert ${filename} -format "%[mean]" info:`
+        # convert to an int
+        darknessValue=$( printf "%.0f" $darknessValue )
+        if [ "$darknessValue" -lt "$DARKNESS_THRESHOLD" ]; then
+            rm "${filename}"
+            logger "Photo ${filename} was too dark (darkness value: ${darknessValue}). It has been deleted."
         fi
 
     #else

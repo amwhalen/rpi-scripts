@@ -6,3 +6,9 @@
 
 # delay between photos in seconds (don't set less than 10 seconds)
 #DELAY=60
+
+# threshold below which images are considered too dark
+# takes a value from 0-65535
+# lower value means darker images will be accepted
+# a good default is 1500
+#DARKNESS_THRESHOLD=1500
