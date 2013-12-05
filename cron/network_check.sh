@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # checks network connectivity and reboots if there are problems
 # credit here: http://www.raspberrypi.org/phpBB3/viewtopic.php?f=30&t=20149
