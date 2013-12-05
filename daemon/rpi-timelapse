@@ -17,8 +17,13 @@ if [[ -z "$DARKNESS_THRESHOLD" ]]; then
     DARKNESS_THRESHOLD=1500
 fi
 
-logger "rpi-timelapse save directory: ${SAVEDIR}"
-logger "rpi-timelapse delay: ${DELAY}"
+# log to logger
+function logit {
+    logger -t "rpi-timelapse" "$1"
+}
+
+logit "rpi-timelapse save directory: ${SAVEDIR}"
+logit "rpi-timelapse delay: ${DELAY}"
 
 # loop and take photos
 while [ true ]; do
@@ -33,7 +38,7 @@ while [ true ]; do
         if [ ! -d "$directory" ]; then
             mkdir -p $directory
             if [ $? -ne 0 ]; then
-                logger "Unable to create directory: ${directory}"
+                logit "Unable to create directory: ${directory}"
                 exit 1
             fi
         fi
@@ -43,7 +48,7 @@ while [ true ]; do
         /usr/bin/env raspistill -o $directory/$filename
 
         if [ $? -ne 0 ]; then
-            logger "Unable to use raspistill to take a photo. Error codefrom raspistill: $?"
+            logit "Unable to use raspistill to take a photo. Error codefrom raspistill: $?"
             exit 1
         fi
 
@@ -53,13 +58,13 @@ while [ true ]; do
         darknessValue=$( printf "%.0f" $darknessValue )
         if [ "$darknessValue" -lt "$DARKNESS_THRESHOLD" ]; then
             rm "${directory}/${filename}"
-            logger "Photo ${filename} was too dark (darkness value: ${darknessValue}). It has been deleted."
+            logit "Photo ${filename} was too dark (darkness value: ${darknessValue}). It has been deleted."
         else
-            logger "Photo saved to ${filename}. Darkness value: ${darknessValue}"
+            logit "Photo saved to ${filename}. Darkness value: ${darknessValue}"
         fi
 
     #else
-        #logger "Not time for a photo."
+        #logit "Not time for a photo."
     #fi
 
     sleep $DELAY;
