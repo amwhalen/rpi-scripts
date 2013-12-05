@@ -25,11 +25,16 @@ PING="/bin/ping"
 IFUP="/sbin/ifup"
 IFDOWN="/sbin/ifdown --force"
 
+# logs using logger
+function logit {
+    logger -t "network_check" "$1"
+}
+
 # make sure flag dir exists
 FLAGDIR=`dirname $FLAG`
 if [ ! -d $FLAGDIR ]
 then
-    logger "creating flag directory: $FLAGDIR"
+    logit "creating flag directory: $FLAGDIR"
     sudo mkdir -p $FLAGDIR
 fi
 
@@ -37,20 +42,20 @@ fi
 $PING -c $PING_COUNT $IP_FOR_TEST > /dev/null 2> /dev/null
 if [ $? -ge 1 ]
 then
-    logger "$INTERFACE seems to be down, trying to bring it up..."
+    logit "$INTERFACE seems to be down, trying to bring it up..."
         if [ -e $FLAG ]
         then
-                logger "$INTERFACE is still down, REBOOT to recover ..."
+                logit "$INTERFACE is still down, REBOOT to recover ..."
                 rm -f $FLAG 2>/dev/null
                 sudo reboot
         else
                 # set a flag so next time around we know it's already been down once
                 touch $FLAG
-                logger $(sudo $IFDOWN $INTERFACE)
+                logit $(sudo $IFDOWN $INTERFACE)
                 sleep 10
-                logger $(sudo $IFUP $INTERFACE)
+                logit $(sudo $IFUP $INTERFACE)
         fi
 else
-    logger "$INTERFACE is up"
+    logit "$INTERFACE is up"
     rm -f $FLAG 2>/dev/null
 fi
