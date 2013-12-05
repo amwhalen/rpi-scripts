@@ -56,6 +56,8 @@ while [ true ]; do
         if [ "$darknessValue" -lt "$DARKNESS_THRESHOLD" ]; then
             rm "${directory}/${filename}"
             logger "Photo ${filename} was too dark (darkness value: ${darknessValue}). It has been deleted."
+        else
+            logger "Photo ${filename} is OK. Darkness value: ${darknessValue}"
         fi
 
     #else
